@@ -17,7 +17,7 @@ courses: { compsci: {week: 15} }
         canvas {
             background-color: red;
             border: 1px solid #000;
-        }
+        } 
         input[type = "range"]{
             accent-color: grey
         }
@@ -41,7 +41,7 @@ courses: { compsci: {week: 15} }
 </head>
 <body>
     <div id = "settingsScreen">Choose your settings and click Start Game</div>
-    <div style = "float:left;">
+    <div style = "float:left">
         <canvas id="gameCanvas" width="600" height="400" style = "display:inline-block"></canvas>
         <div style = "min-width:300px; display:inline-block;" id = "sideMenu">
             <div id = "originalColor" style = "color:black;"></div>
@@ -454,6 +454,7 @@ courses: { compsci: {week: 15} }
             shields.push({ x: shieldX, y: shieldY, width: shieldWidth, height: shieldWidth });
         }
         function startUp(){
+            document.getElementById("settingsScreen").style.display = "none";
             setTimeout(createObstacle, 1000)  // Create obstacles every second
             setInterval(createMysteryBox, speedBoostActive ? 11000: 5000); // Create mystery boxes every 5 seconds
             setInterval(createSpeedBoost, speedBoostActive ? 15400: 7000); // Create speed boosts every 7 seconds
