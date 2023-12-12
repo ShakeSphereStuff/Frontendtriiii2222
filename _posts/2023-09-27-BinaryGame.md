@@ -12,7 +12,7 @@ courses: { compsci: {week: 15} }
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mariokartgaming</title>
+    <title>Traffic Testing Game Boogollo</title>
     <style>
         canvas {
             background-color: red;
@@ -265,6 +265,64 @@ courses: { compsci: {week: 15} }
                     carY < obstacles[i].y + obstacles[i].height &&
                     carY + CAR_HEIGHT > obstacles[i].y &&
                     shieldActive == true
+                ){
+                    shieldActive == false
+                }
+                // Check if the car passes the obstacle
+                if (obstacles[i].y > canvas.height) {
+                    obstacles.splice(i, 1); // Remove the obstacle
+                    score++; // Increment the score
+                }
+            }
+            // Move mystery boxes
+            for (let i = 0; i < mysteryBoxes.length; i++) {
+                mysteryBoxes[i].y += speedBoostActive ? OBSTACLE_SPEED * 0.5: OBSTACLE_SPEED;
+                // Check for collision between car and mystery box
+                if (
+                    carX < mysteryBoxes[i].x + mysteryBoxes[i].width &&
+                    carX + CAR_WIDTH > mysteryBoxes[i].x &&
+                    carY < mysteryBoxes[i].y + mysteryBoxes[i].height &&
+                    carY + CAR_HEIGHT > mysteryBoxes[i].y
+                ) {
+                    console.log("Mystery Box Hit!");
+                    handleMysteryBox();
+                    mysteryBoxes.splice(i, 1); // Remove the mystery box
+                }
+            }
+            // Move speed boosts
+            for (let i = 0; i < speedBoosts.length; i++) {
+                speedBoosts[i].y += speedBoostActive ? OBSTACLE_SPEED * 0.5: OBSTACLE_SPEED;
+                // Check for collision between car and speed boost
+                if (
+                    carX < speedBoosts[i].x + speedBoosts[i].width &&
+                    carX + CAR_WIDTH > speedBoosts[i].x &&
+                    carY < speedBoosts[i].y + speedBoosts[i].height &&
+                    carY + CAR_HEIGHT > speedBoosts[i].y
+                ) {
+                    console.log("Speed Boost Hit!");
+                    handleSpeedBoost();
+                    speedBoosts.splice(i, 1); // Remove the speed boost
+                }
+            }
+            // Move shields
+            for (let i = 0; i < shields.length; i++) {
+                shields[i].y += speedBoostActive ? OBSTACLE_SPEED * 0.5: OBSTACLE_SPEED
+                // Check for collision between car and shield
+                if (
+                    carX < shields[i].x + shields[i].width &&
+                    carX + CAR_WIDTH > shields[i].x &&
+                    carY < shields[i].y + shields[i].height &&
+                    carY + CAR_HEIGHT > shields[i].y
+                ) {
+                    console.log("Shield Hit!");
+                    handleShield();
+                    shields.splice(i, 1); // Remove the shield
+                }
+            }
+        }
+        function handleCollision() {
+            if (shieldActive) {
+                console.log("Shield Protected!");
                 shieldActive = false; // Deactivate the shield
             } else {
                 gameRunning = false; // Stop the game on collision
